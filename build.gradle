@@ -1,38 +1,32 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-	maven { url 'https://repo.papermc.io/repository/maven-public/' }
+	// Add any additional repositories here
 }
 
 dependencies {
-	//to change the versions see the gradle.properties file
+	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	compileOnly "org.spigotmc:spigot-api:${project.spigot_version}"
-
-	compileOnly "com.velocitypowered:velocity-api:${project.velocity_version}"
-	annotationProcessor "com.velocitypowered:velocity-api:${project.velocity_version}"
 }
 
 processResources {
 	inputs.property "version", project.version
 
-	filesMatching(["fabric.mod.json", "plugin.yml"]) {
+	filesMatching("fabric.mod.json") {
 		expand "version": project.version
 	}
 }
