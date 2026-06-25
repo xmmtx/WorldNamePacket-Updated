@@ -1,5 +1,7 @@
 # WorldNamePacket
 
+[English](README.md) | [中文](README_sc.md)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y726QMH)
 
 为客户端小地图模组提供支持的**服务端**辅助模组。在多世界环境下自动设置世界名称，

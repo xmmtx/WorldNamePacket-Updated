@@ -1,5 +1,7 @@
 # WorldNamePacket
 
+[English](README.md) | [中文](README_sc.md)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y726QMH)
 
 Server-side companion mod for client-side mapping mods. Automatically sets the
