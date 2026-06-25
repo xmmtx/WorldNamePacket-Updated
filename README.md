@@ -2,39 +2,71 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y726QMH)
 
-Server-side companion for mapping mods. Automatically sets world name
-in Multiworld mode - no more manual configuration and "world not recognized"
-messages.
+Server-side companion mod for client-side mapping mods. Automatically sets the
+world name in multi-world setups — no more manual configuration and "world not
+recognized" errors.
 
-Supported platforms: Fabric, Spigot.
+**Platform:** Fabric only (MC 1.21.4+)  
+**Supported map mods:** VoxelMap, Xaero's World Map
 
-Supported mapping mods: VoxelMap, Xaero's Map, JourneyMap, Rei's Minimap.
+> **Note:** Spigot/Paper and Velocity support has been removed in v2.0.  
+> For Bukkit-based servers, use [AdvancedServerFlags](https://modrinth.com/plugin/advancedserverflags) or similar maintained alternatives.
 
 ## Functionality
 
-This mod helps in a specific situation: where you connect to a server
-that has more than the 3 vanilla dimensions, mapping mods easily get confused
-and can either mix up the maps or ask you which one you're on. This can
-happen on many modded servers - but also vanilla servers if there are behind
-a proxy (Bungeecord/Velocity/etc).
+When you connect to a server with more than the 3 vanilla dimensions (common on
+modded servers, or proxy setups like BungeeCord/Velocity), mapping mods can get
+confused — mixing up maps or asking "which world are you on?"
 
-This tool solves this problem by telling the mapping mod which world it's connected to.
+WorldNamePacket solves this by telling the mapping mod the correct world name
+on every world join or dimension change.
+
+| Map Mod | Channel | Mechanism |
+|---------|---------|-----------|
+| VoxelMap | `worldinfo:world_id` | Request → Response |
+| Xaero's World Map | `xaeroworldmap:main` | Push on world change |
 
 ## Installation
 
-Download a jar from the Releases section and drop it in your mods/plugin folder on the
-**server side**. If you're using a proxy (Bungecord/Velocity/etc.) make sure to have
-it installed on all servers.
-
-The jar works on both Fabric and Spigot - cursed, I know.
+1. Download the jar from [Releases](https://github.com/kosma/worldnamepacket/releases).
+2. Place it in your server's `mods/` folder.
+3. Requires [Fabric Loader](https://fabricmc.net/) ≥ 0.16 and [Fabric API](https://modrinth.com/mod/fabric-api).
+4. No client-side installation needed.
 
 ## Configuration
 
-There's nothing to configure. The mod will automatically read the world name from
-your server configuration (`level-name` on vanilla, dimension name on modded).
-One common issue is that all your worlds are named `world` - you'll have to fix that
-for the mod to operate correctly.
+There is nothing to configure. The mod reads the world name from your server's
+`level-name` in `server.properties`. Make sure each server/world has a unique
+`level-name` — the default `world` won't help distinguish dimensions.
 
-## Where's the Forge version?
+## For Developers
 
-I don't know Forge, sorry. If you can code it up, please let me know!
+### Building
+
+```bash
+./gradlew build
+```
+
+Requires JDK 21+.
+
+### Upgrading to a new Minecraft version
+
+Edit `gradle.properties`:
+
+```properties
+minecraft_version=<target>
+yarn_mappings=<target>+build.1
+fabric_version=<matching fabric api>
+```
+
+Then update `fabric.mod.json` → `depends.minecraft` accordingly.
+
+### How it works
+
+The mod uses a Mixin to hook into `PlayerManager.sendWorldInfo()`, which fires
+on player join and dimension change. It then sends the world name via Fabric
+networking (CustomPayload API) on the appropriate plugin channel.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
