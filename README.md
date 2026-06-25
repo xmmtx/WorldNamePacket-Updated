@@ -17,9 +17,9 @@ Server-side companion mod for client-side mapping mods. Automatically sets the w
 Now only supports `Fabric` loader, along with `VoxelMap` and `Xaero's Map`.
 
 ## Functionality
-This mod solves a specific problem: when you connect to a server with more than the vanilla 3 dimensions, mapping mods can easily get confused — either mixing up maps or asking which world you're currently in. This happens on many modded servers, but also on vanilla servers behind a proxy (BungeeCord/Velocity, etc.).
+This mod helps in a specific situation: where you connect to a server that has more than the 3 vanilla dimensions, mapping mods easily get confused and can either mix up the maps or ask you which one you're on. This can happen on many modded servers - but also vanilla servers if there are behind a proxy (Bungeecord/Velocity/etc).
 
-This tool fixes it by telling the mapping mod which world it's connected to.
+This tool solves this problem by telling the mapping mod which world it's connected to.
 
 ## Installation
 1. Download the jar from [Releases](https://github.com/xmmtx/WorldNamePacket-Updated/releases).
